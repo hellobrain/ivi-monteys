@@ -1,0 +1,102 @@
+/*
+ * Homepage composition from Figma "02 · Home · Big letter" (1440 frame).
+ * At ≥1280px the poster section uses the design's own coordinates, scaled by
+ * --u (1px at 1440 wide). Below that, elements fall back to normal flow.
+ */
+
+.canvas {
+  --u: min(1px, calc(100vw / 1440));
+  position: relative;
+  max-width: 1440px;
+  margin-inline: auto;
+  overflow-x: clip;
+}
+
+.flowPad {
+  padding-inline: 1rem;
+}
+
+@media (min-width: 640px) {
+  .flowPad {
+    padding-inline: 2rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .canvas {
+    height: calc(var(--h) * var(--u));
+  }
+  .flowPad {
+    padding-inline: 0;
+  }
+  .abs {
+    position: absolute;
+    left: calc(var(--x) * var(--u));
+    top: calc(var(--y) * var(--u));
+    margin: 0;
+  }
+  .w {
+    width: calc(var(--w) * var(--u));
+  }
+  .hh {
+    height: calc(var(--hh) * var(--u));
+  }
+  .fs {
+    font-size: max(var(--fmin, 0px), calc(var(--fs) * var(--u)));
+  }
+  .center {
+    transform: translateX(-50%);
+  }
+}
+
+/* Small type keeps a readable floor on any screen. */
+.small {
+  font-size: 1rem;
+}
+.body {
+  font-size: 1.0625rem;
+  line-height: 1.4;
+}
+
+.bigWord {
+  font-family: var(--font-display);
+  line-height: 0.9;
+  color: var(--color-paper);
+  white-space: nowrap;
+}
+
+.ticket {
+  display: block;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  transition: transform 200ms ease, box-shadow 200ms ease;
+}
+.ticket:hover {
+  box-shadow: 0 0 0 3px var(--color-vermilion);
+}
+@media (min-width: 1280px) {
+  .ticket {
+    position: absolute;
+    width: calc(560 * var(--u));
+    height: calc(200 * var(--u));
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) rotate(var(--r));
+  }
+  .ticket:hover {
+    transform: translate(-50%, -50%) rotate(calc(var(--r) / 2));
+  }
+}
+
+.barcode {
+  display: flex;
+  gap: 1.5px;
+  align-items: stretch;
+}
+.barcode span {
+  background: var(--color-ink);
+  width: 2px;
+}
+.barcode span:nth-child(3n + 1) {
+  width: 3px;
+}
